@@ -95,6 +95,9 @@ export class WebActionUtils {
   async getText(locator: Locator): Promise<string> {
     return (await locator.textContent()) || '';
   }
+   async getAllText(locator: Locator): Promise<string[]> {
+    return (await locator.allTextContents()) || '';
+  }
 
   async getAttribute(locator: Locator, attr: string): Promise<string | null> {
     return await locator.getAttribute(attr);
