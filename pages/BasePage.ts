@@ -1,6 +1,6 @@
 import { Page } from '@playwright/test';
-import { WebActionUtils } from '../utils/WebActionUtils';
-import { WebPageUtils } from '../utils/WebPageUtils';
+import { WebActionUtils } from '../Utils/WebActionUtils';
+import { WebPageUtils } from '../Utils/WebPageUtils';
 
 export abstract class BasePage {
   protected page: Page;
