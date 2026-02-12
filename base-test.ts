@@ -1,4 +1,34 @@
 import { test as base, Page, expect } from '@playwright/test';
+/**
+ * ================= ENV SETUP GUIDE =================
+ *
+ * 1. Install dotenv package:
+ *    npm install dotenv --save
+ *
+ * 2. Create a `.env` file inside the `configs` folder.
+ *    Add your environment constants, for example:
+ *      BASE_URL=https://example.com
+ *      OTHER_CONSTANT=value
+ *
+ * 3. Load `.env` in `playwright.config.ts`:
+ *    require('dotenv').config();
+ * 
+ * 4. Use BASE_URL in Playwright config:
+ *    use: {
+ *      baseURL: process.env.BASE_URL,
+ *      // other options...
+ *    }
+ *
+ * 5. Load `.env` in `base-test.ts` to access environment variables:
+ *    import * as dotenv from 'dotenv';
+ *    import * as path from 'path';
+ *    dotenv.config({ path: path.resolve(__dirname, 'configs/.env') });
+ *    // Now you can use process.env.BASE_URL and other constants in your tests
+ *
+ * ===================================================
+ */
+
+
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 import { allure } from 'allure-playwright';

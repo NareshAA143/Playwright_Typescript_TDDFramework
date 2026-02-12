@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+/* install package: npm install csv-parse */
 import { parse } from 'csv-parse/sync';
 
 export class CsvUtils {
