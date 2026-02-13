@@ -1,4 +1,4 @@
-import { Locator, Page } from '@playwright/test';
+import { expect, Locator, Page } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class SauseDemoProductsPage extends BasePage {
@@ -17,6 +17,7 @@ export class SauseDemoProductsPage extends BasePage {
     this.productDescription = this.page.locator('.inventory_item_desc');
     this.productPrice = this.page.locator('.inventory_item_price');
     this.addToCart = this.page.locator('.btn.btn_primary');
+    this.products = this.page.locator('[data-test="title"]');
   }
 
   public async verifyProductsPageURL(URL:string) {
@@ -67,4 +68,5 @@ export class SauseDemoProductsPage extends BasePage {
     }
   }
   }
+
 }

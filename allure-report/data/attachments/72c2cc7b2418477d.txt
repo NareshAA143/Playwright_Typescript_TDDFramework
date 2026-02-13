@@ -1,4 +1,4 @@
-Total products found: 6
+Total products found: 1
 All products names: Sauce Labs Backpack,Sauce Labs Bike Light,Sauce Labs Bolt T-Shirt,Sauce Labs Fleece Jacket,Sauce Labs Onesie,Test.allTheThings() T-Shirt (Red)
 Product 1 title: Sauce Labs Backpack
 Product 2 title: Sauce Labs Bike Light

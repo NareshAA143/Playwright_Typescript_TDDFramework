@@ -1,6 +1,7 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from './BasePage';
 
+
 export class SauceDemoLoginPage extends BasePage {
   private userName: Locator;
   private password: Locator;
@@ -14,8 +15,14 @@ export class SauceDemoLoginPage extends BasePage {
   }
 
   public async navigate() {
-    await this.webPageUtils.navigate('https://www.saucedemo.com/');
+  const url = process.env.BASE_URL;
+  if (!url) {
+    throw new Error('BASE_URL is not defined in env file');
   }
+  await this.webPageUtils.navigate(url);
+}
+
+
 
   public async login(username: string, password: string) {
     await this.webActionUtils.fill(this.userName, username);
