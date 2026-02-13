@@ -103,3 +103,7 @@ jobs:
         with:
           name: allure-report-final
           path: allure-report
+
+# After raising a PR, the pipeline runs successfully and generates the merged Allure report artifact.
+# Download the merged Allure artifact from GitHub Actions, unzip it, open the folder, type cmd in the address bar and press Enter.
+# Run `npx serve`, copy the generated localhost URL, and open it in your browser to view the Allure report.
