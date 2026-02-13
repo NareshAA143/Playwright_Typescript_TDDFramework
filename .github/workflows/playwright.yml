@@ -1,73 +1,75 @@
 # Job for running smoke tests on Chromium and generating Allure report
-name: Playwright Tests
+name: Playwright Tests  # Name of the GitHub Actions workflow
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main ]  # Trigger workflow when code is pushed to the main branch
   pull_request:
-    branches: [ main ]
+    branches: [ main ]  # Trigger workflow when a pull request targets the main branch
 
 jobs:
-  playwright-tests:
-    runs-on: ubuntu-latest
+  playwright-tests:  # First job: runs Playwright tests
+    runs-on: ubuntu-latest  # Use the latest Ubuntu environment
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4  # Check out the repository code to the runner
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4  # Set up Node.js environment
         with:
-          node-version: 18
+          node-version: 18  # Specify Node.js version 18
 
       - name: Install dependencies
-        run: npm install
+        run: npm install  # Install Node.js dependencies from package.json
 
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps  # Install Playwright browsers and dependencies
 
       - name: Run Smoke tests on Chromium
-        run: npx playwright test --reporter=line,allure-playwright
+        run: npx playwright test --reporter=line,allure-playwright  
+        # Run Playwright tests with line reporter and Allure reporter
 
       - name: Upload Allure results
-        if: always()
-        uses: actions/upload-artifact@v4
+        if: always()  # Run this step even if previous steps fail
+        uses: actions/upload-artifact@v4  # Upload files as GitHub Actions artifacts
         with:
-          name: allure-results
-          path: allure-results
-          if-no-files-found: warn
+          name: allure-results  # Name of the artifact
+          path: allure-results  # Path to upload
+          if-no-files-found: warn  # Warn if no files are found, don’t fail the job
 
-  generate-allure-report:
-    needs: playwright-tests
-    if: always()
-    runs-on: ubuntu-latest
+  generate-allure-report:  # Second job: generate Allure report
+    needs: playwright-tests  # Run this job after playwright-tests job completes
+    if: always()  # Run even if previous job failed
+    runs-on: ubuntu-latest  # Use Ubuntu environment
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4  # Check out repository code
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4  # Set up Node.js
         with:
-          node-version: 18
+          node-version: 18  # Use Node.js version 18
 
       - name: Install Allure CLI
-        run: npm install -g allure-commandline
+        run: npm install -g allure-commandline  # Install Allure command line tool globally
 
       - name: Download Allure results
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v4  # Download artifact from previous job
         with:
-          name: allure-results
-          path: allure-results
+          name: allure-results  # Name of artifact to download
+          path: allure-results  # Destination path on runner
 
       - name: Generate Allure report
-        run: allure generate allure-results --clean -o allure-report
+        run: allure generate allure-results --clean -o allure-report  
+        # Generate Allure HTML report in 'allure-report' folder, cleaning previous report
 
       - name: Upload final Allure report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4  # Upload final Allure report as artifact
         with:
-          name: allure-report-final
-          path: allure-report
+          name: allure-report-final  # Artifact name
+          path: allure-report  # Path to the generated report
 
 #
 
