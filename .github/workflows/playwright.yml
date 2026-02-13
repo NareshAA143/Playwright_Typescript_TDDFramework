@@ -28,6 +28,7 @@
 #     - name: Run Playwright tests
 #       run: npx playwright test
 
+# Job for running smoke tests on Chromium and generating Allure report
 name: Playwright Tests
 
 on:
@@ -39,10 +40,6 @@ on:
 jobs:
   playwright-tests:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        shard: [1, 2, 3, 4]
 
     steps:
       - name: Checkout code
@@ -59,16 +56,18 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Run Playwright tests (Shard ${{ matrix.shard }})
-        run: npx playwright test --shard=${{ matrix.shard }}/4 --reporter=line,allure-playwright
+      - name: Run Smoke tests on Chromium
+        run: npx playwright test --project=chromium --reporter=line,allure-playwright
 
-      - name: Upload Allure results (Shard ${{ matrix.shard }})
+      - name: Upload Allure results
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results-shard-${{ matrix.shard }}
+          name: allure-results
           path: allure-results
+          if-no-files-found: warn
 
-  merge-allure-results:
+  generate-allure-report:
     needs: playwright-tests
     if: always()
     runs-on: ubuntu-latest
@@ -85,24 +84,99 @@ jobs:
       - name: Install Allure CLI
         run: npm install -g allure-commandline
 
-      - name: Download all Allure results
+      - name: Download Allure results
         uses: actions/download-artifact@v4
         with:
+          name: allure-results
           path: allure-results
 
-      - name: Merge Allure results
-        run: |
-          mkdir merged-results
-          find allure-results -type f -exec cp {} merged-results \;
-
-      - name: Generate final Allure report
-        run: allure generate merged-results --clean -o allure-report
+      - name: Generate Allure report
+        run: allure generate allure-results --clean -o allure-report
 
       - name: Upload final Allure report
         uses: actions/upload-artifact@v4
         with:
           name: allure-report-final
           path: allure-report
+
+#
+
+# # Job for running Playwright tests in parallel across 4 shards and generating a merged Allure report
+# name: Playwright Tests
+
+# on:
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
+
+# jobs:
+#   playwright-tests:
+#     runs-on: ubuntu-latest
+
+#     strategy:
+#       matrix:
+#         shard: [1, 2, 3, 4]
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 18
+
+#       - name: Install dependencies
+#         run: npm install
+
+#       - name: Install Playwright Browsers
+#         run: npx playwright install --with-deps
+
+#       - name: Run Playwright tests (Shard ${{ matrix.shard }})
+#         run: npx playwright test --shard=${{ matrix.shard }}/4 --reporter=line,allure-playwright
+
+#       - name: Upload Allure results (Shard ${{ matrix.shard }})
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: allure-results-shard-${{ matrix.shard }}
+#           path: allure-results
+
+#   merge-allure-results:
+#     needs: playwright-tests
+#     if: always()
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 18
+
+#       - name: Install Allure CLI
+#         run: npm install -g allure-commandline
+
+#       - name: Download all Allure results
+#         uses: actions/download-artifact@v4
+#         with:
+#           path: allure-results
+
+#       - name: Merge Allure results
+#         run: |
+#           mkdir merged-results
+#           find allure-results -type f -exec cp {} merged-results \;
+
+#       - name: Generate final Allure report
+#         run: allure generate merged-results --clean -o allure-report
+
+#       - name: Upload final Allure report
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: allure-report-final
+#           path: allure-report
 
 # After raising a PR, the pipeline runs successfully and generates the merged Allure report artifact.
 # Download the merged Allure artifact from GitHub Actions, unzip it, open the folder, type cmd in the address bar and press Enter.
