@@ -20,7 +20,8 @@ export class WebActionUtils {
 
  async fill(locator: Locator, value: string) {
   await locator.waitFor({ state: 'visible', timeout: 15000 });
-  await locator.clear();
+  await locator.click();
+  await locator.fill('');
   await locator.fill(value);
 }
 
