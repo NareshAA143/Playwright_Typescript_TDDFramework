@@ -28,7 +28,6 @@ import { test as base, Page, expect } from '@playwright/test';
  * ===================================================
  */
 
-
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 import { allure } from 'allure-playwright';
@@ -39,10 +38,18 @@ dotenv.config({ path: path.resolve(__dirname, 'configs/.env') });
 console.log('BASE_URL loaded:', process.env.BASE_URL); // Optional: check it loads
 import { SauceDemoLoginPage } from './pages/SauceDemoLoginPage';
 import { SauseDemoProductsPage } from './pages/SauceDemoProductsPage';
+import { AmazonPage } from './pages/AmazonPage';
+import { OrangeHRMLoginPage } from './pages/OrangeHRMLoginPage';
+import { OrangeHRMHomePage } from './pages/OrangeHRMHomePage';
+import { OrangeHRMPersonalDetailsPage } from './pages/OrangeHRMPersonalDetailsPage';
 
 type Fixtures = {
   sauceDemoLoginPage: SauceDemoLoginPage;
   sauceDemoProductsPage: SauseDemoProductsPage;
+  amazonPage: AmazonPage;
+  orangeHRMLoginPage: OrangeHRMLoginPage;
+  orangeHRMHomePage: OrangeHRMHomePage;
+  orangeHRMPersonalDetailsPage: OrangeHRMPersonalDetailsPage;
 };
 
 export const test = base.extend<Fixtures>({
@@ -52,6 +59,19 @@ export const test = base.extend<Fixtures>({
 
   sauceDemoProductsPage: async ({ page }: { page: Page }, use) => {
     await use(new SauseDemoProductsPage(page));
+  },
+
+  amazonPage: async ({ page }: { page: Page }, use) => {
+    await use(new AmazonPage(page));
+  },
+  orangeHRMLoginPage: async ({ page }: { page: Page }, use) => {
+    await use(new OrangeHRMLoginPage(page));
+  },
+  orangeHRMHomePage: async ({ page }: { page: Page }, use) => {
+    await use(new OrangeHRMHomePage(page));
+  },
+  orangeHRMPersonalDetailsPage: async ({ page }: { page: Page }, use) => {
+    await use(new OrangeHRMPersonalDetailsPage(page));
   },
 });
 

@@ -1,4 +1,4 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","9378","SauceDemo test","webkit","2026-02-12","passed","2026-02-12","","SauseDemo.spec.ts","",""
-"","7508","SauceDemo test","firefox","2026-02-12","passed","2026-02-12","","SauseDemo.spec.ts","",""
-"","3928","SauceDemo test","chromium","2026-02-12","passed","2026-02-12","","SauseDemo.spec.ts","",""
+"","4922","SauceDemo test","webkit","2026-02-13","passed","2026-02-13","","SauseDemo.spec.ts","",""
+"","3063","SauceDemo test","chromium","2026-02-13","passed","2026-02-13","","SauseDemo.spec.ts","",""
+"","3905","SauceDemo test","firefox","2026-02-13","passed","2026-02-13","","SauseDemo.spec.ts","",""

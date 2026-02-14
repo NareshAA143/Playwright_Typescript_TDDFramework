@@ -18,9 +18,12 @@ export class WebActionUtils {
     await locator.click({ button: 'right' });
   }
 
-  async fill(locator: Locator, value: string) {
-    await locator.fill(value);
-  }
+ async fill(locator: Locator, value: string) {
+  await locator.waitFor({ state: 'visible', timeout: 15000 });
+  await locator.click();
+  await locator.fill('');
+  await locator.fill(value);
+}
 
   async clear(locator: Locator) {
     await locator.fill('');
