@@ -26,7 +26,7 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps  # Install Playwright browsers and dependencies
 
-      - name: Run Smoke tests on Chromium
+      - name: Run Smoke tests
         run: npx playwright test --reporter=line,allure-playwright  
         # Run Playwright tests with line reporter and Allure reporter
 
