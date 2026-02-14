@@ -15,7 +15,7 @@ export class AmazonPage extends BasePage {
         this.rowsSuggested = this.page.locator('[id*="sac-suggestion-row"]');
     }
     public async navigate(){
-        const url = process.env.BASE_URL;
+        const url = process.env.BASE_URL2;
         if (!url) {
     throw new Error('BASE_URL is not defined in env file');
     }

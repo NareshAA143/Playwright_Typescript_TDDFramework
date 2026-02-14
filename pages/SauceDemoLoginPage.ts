@@ -15,7 +15,7 @@ export class SauceDemoLoginPage extends BasePage {
   }
 
   public async navigate() {
-  const url = process.env.BASE_URL;
+  const url = process.env.BASE_URL1;
   if (!url) {
     throw new Error('BASE_URL is not defined in env file');
   }
