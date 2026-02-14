@@ -7,8 +7,12 @@ export class WebPageUtils {
   // NAVIGATION
   // ----------------------
   async navigate(url: string) {
-  await this.page.goto(url, { waitUntil: 'networkidle', timeout: 60000 });
+  await this.page.goto(url, {
+    timeout: 60000,
+    waitUntil: "domcontentloaded"
+  });
 }
+
   async goBack() {
     await this.page.goBack();
   }

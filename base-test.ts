@@ -39,10 +39,12 @@ dotenv.config({ path: path.resolve(__dirname, 'configs/.env') });
 console.log('BASE_URL loaded:', process.env.BASE_URL); // Optional: check it loads
 import { SauceDemoLoginPage } from './pages/SauceDemoLoginPage';
 import { SauseDemoProductsPage } from './pages/SauceDemoProductsPage';
+import { AmazonPage } from './pages/AmazonPage';
 
 type Fixtures = {
   sauceDemoLoginPage: SauceDemoLoginPage;
   sauceDemoProductsPage: SauseDemoProductsPage;
+  amazonPage: AmazonPage;
 };
 
 export const test = base.extend<Fixtures>({
@@ -52,6 +54,10 @@ export const test = base.extend<Fixtures>({
 
   sauceDemoProductsPage: async ({ page }: { page: Page }, use) => {
     await use(new SauseDemoProductsPage(page));
+  },
+
+  amazonPage: async ({ page }: { page: Page }, use) => {
+    await use(new AmazonPage(page));
   },
 });
 
