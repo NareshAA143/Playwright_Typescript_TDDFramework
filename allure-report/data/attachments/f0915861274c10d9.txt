@@ -1,6 +1,0 @@
-First Name input value: Tom
-Middle Name input value: and
-Last Name input value: Jerry
-Employee Id input value: 143143
-Drivers License input value: 12345
-Other Id input value: 123123
