@@ -7,8 +7,9 @@ export class WebActionUtils {
   // ----------------------
 
   async click(locator: Locator) {
-    await locator.click();
-  }
+  await locator.click();
+}
+
 
   async doubleClick(locator: Locator) {
     await locator.dblclick();
