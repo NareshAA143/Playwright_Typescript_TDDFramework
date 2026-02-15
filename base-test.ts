@@ -42,6 +42,7 @@ import { AmazonPage } from './pages/AmazonPage';
 import { OrangeHRMLoginPage } from './pages/OrangeHRMLoginPage';
 import { OrangeHRMHomePage } from './pages/OrangeHRMHomePage';
 import { OrangeHRMPersonalDetailsPage } from './pages/OrangeHRMPersonalDetailsPage';
+import { GlobalsaPage } from './pages/GlobalsaPage';
 
 type Fixtures = {
   sauceDemoLoginPage: SauceDemoLoginPage;
@@ -50,6 +51,7 @@ type Fixtures = {
   orangeHRMLoginPage: OrangeHRMLoginPage;
   orangeHRMHomePage: OrangeHRMHomePage;
   orangeHRMPersonalDetailsPage: OrangeHRMPersonalDetailsPage;
+  globalsqaPage: GlobalsaPage;
 };
 
 export const test = base.extend<Fixtures>({
@@ -72,6 +74,9 @@ export const test = base.extend<Fixtures>({
   },
   orangeHRMPersonalDetailsPage: async ({ page }: { page: Page }, use) => {
     await use(new OrangeHRMPersonalDetailsPage(page));
+  },
+  globalsqaPage: async ({ page }: { page: Page }, use) => {
+    await use(new GlobalsaPage(page));
   },
 });
 
