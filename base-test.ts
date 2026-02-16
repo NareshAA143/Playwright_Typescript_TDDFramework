@@ -44,6 +44,7 @@ import { OrangeHRMHomePage } from './pages/OrangeHRMHomePage';
 import { OrangeHRMPersonalDetailsPage } from './pages/OrangeHRMPersonalDetailsPage';
 import { GlobalsaPage } from './pages/GlobalsaPage';
 import { LetCodePage } from './pages/LetCodePage';
+import { SauceDemoAboutPage } from './pages/SauceDemoAboutPage';
 
 type Fixtures = {
   sauceDemoLoginPage: SauceDemoLoginPage;
@@ -54,6 +55,7 @@ type Fixtures = {
   orangeHRMPersonalDetailsPage: OrangeHRMPersonalDetailsPage;
   globalsqaPage: GlobalsaPage;
   letCodePage: LetCodePage;
+  sauceDemoAboutPage: SauceDemoAboutPage;
 };
 
 export const test = base.extend<Fixtures>({
@@ -82,6 +84,9 @@ export const test = base.extend<Fixtures>({
   },
   letCodePage: async ({ page }: { page: Page }, use) => {
     await use(new LetCodePage(page));
+  },
+  sauceDemoAboutPage: async ({ page }: { page: Page }, use) => {
+    await use(new SauceDemoAboutPage(page));
   },
 });
 

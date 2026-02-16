@@ -8,6 +8,9 @@ export class SauseDemoProductsPage extends BasePage {
   private productDescription: Locator;
   private productPrice: Locator;
   private addToCart:Locator;
+  private menu: Locator;
+  private logout: Locator;
+  private about: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -18,6 +21,9 @@ export class SauseDemoProductsPage extends BasePage {
     this.productPrice = this.page.locator('.inventory_item_price');
     this.addToCart = this.page.locator('.btn.btn_primary');
     this.products = this.page.locator('[data-test="title"]');
+    this.menu = this.page.locator('#react-burger-menu-btn');
+    this.logout = this.page.locator('#logout_sidebar_link');
+    this.about = this.page.locator('#about_sidebar_link');
   }
 
   public async verifyProductsPageURL(URL:string) {
@@ -67,6 +73,15 @@ export class SauseDemoProductsPage extends BasePage {
       throw new Error(`Product ${i+1} add to cart button is missing`);  
     }
   }
+  }
+  public async ClickOnMenu(){
+     await this.webActionUtils.click(this.menu);
+  }
+  public async clickOnAbout(){
+    await this.webActionUtils.click(this.about);
+  }
+  public async ClickOnLogout(){
+    await this.webActionUtils.click(this.logout);
   }
 
 }
