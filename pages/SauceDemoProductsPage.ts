@@ -7,7 +7,7 @@ export class SauseDemoProductsPage extends BasePage {
   private productTitle: Locator;
   private productDescription: Locator;
   private productPrice: Locator;
-  private addToCart:Locator;
+  private addToCartButton:Locator;
   private menu: Locator;
   private logout: Locator;
   private about: Locator;
@@ -19,7 +19,7 @@ export class SauseDemoProductsPage extends BasePage {
     this.productTitle = this.page.locator('.inventory_item_name');
     this.productDescription = this.page.locator('.inventory_item_desc');
     this.productPrice = this.page.locator('.inventory_item_price');
-    this.addToCart = this.page.locator('.btn.btn_primary');
+    this.addToCartButton = this.page.locator('//div[@class="pricebar"]/child::button');
     this.products = this.page.locator('[data-test="title"]');
     this.menu = this.page.locator('#react-burger-menu-btn');
     this.logout = this.page.locator('#logout_sidebar_link');
@@ -38,6 +38,33 @@ export class SauseDemoProductsPage extends BasePage {
     const productsNames = await this.webElementUtils.getAllText(this.productTitle);
     console.log(`All products names: ${productsNames}`);
   }
+  public async ValidateAllProductsDisplayed(){
+    const names = await this.webElementUtils.getAllText(this.productTitle);
+    const descriptions = await this.webElementUtils.getAllText(this.productDescription);
+    const prices = await this.webElementUtils.getAllText(this.productPrice);
+    const buttonsCount = await this.webActionUtils.count(this.addToCartButton);
+    if(names.length===0)
+      throw new Error(`No products found`);
+    if(names.length!==descriptions.length || names.length!==prices.length || names.length!==buttonsCount)
+      throw new Error(`Mismatch between product details`);
+  }
+  public async addFirstProductToCart(){
+    await this.webActionUtils.click(this.addToCartButton.nth(0));
+    await this.page.locator('body').click();
+
+  }
+
+ public async addAllProductsToCart() {
+    const count = await this.addToCartButton.count();
+    console.log(`Total products to add to cart: ${count}`);
+    for (let i = 0; i < count; i++) {
+        const button = this.addToCartButton.nth(i);
+        await button.scrollIntoViewIfNeeded();
+        await button.waitFor({ state: 'visible', timeout: 5000 });
+        await this.webActionUtils.forceclick(button);
+    }
+}
+
   public async ValidateProductTitles(){
       const allTitles = await this.productTitle.all();
       for(let i=0; i< allTitles.length; i++){
@@ -67,13 +94,35 @@ export class SauseDemoProductsPage extends BasePage {
       if(!price){
         throw new Error(`Product ${i+1} price is empty`);
       }
-    const addToCart = await this.addToCart.nth(i).innerText();
+    const addToCart = await this.addToCartButton.nth(i).innerText();
     console.log(`Product ${i+1} price: ${addToCart}`);
     if(!addToCart){
       throw new Error(`Product ${i+1} add to cart button is missing`);  
     }
   }
   }
+  public async aadAllProductsToCartByProductName(){
+    const productslist:string[] = ['Sauce Labs Backpack', 'Sauce Labs Bike Light', 'Sauce Labs Bolt T-Shirt', 'Sauce Labs Fleece Jacket','Sauce Labs Onesie','Test.allTheThings() T-Shirt (Red)'];
+    for(let i=0; i< productslist.length; i++){
+      const name = await this.productTitle.nth(i).innerText();
+      if(name === productslist[i]){
+        await this.webActionUtils.click(this.addToCartButton.nth(i));
+        console.log(`Product ${i+1}: ${name} added to cart`);
+        await this.page.waitForTimeout(2000);
+      }
+  }
+  }
+  public async addSpecificProductToCart(productTitle:string){
+    for(let i=0; i<await this.addToCartButton.count(); i++){
+      const name = await this.productTitle.nth(i).innerText();
+      if(name === productTitle){
+        await this.webActionUtils.click(this.addToCartButton.nth(i));
+        console.log(`Product ${i+1}: ${name} added to cart`);
+        await this.page.waitForTimeout(2000); 
+      }
+}
+  }
+
   public async ClickOnMenu(){
      await this.webActionUtils.click(this.menu);
   }
