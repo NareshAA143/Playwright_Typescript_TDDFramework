@@ -10,6 +10,11 @@ export class WebActionUtils {
   await locator.click();
 }
 
+async forceclick(locator: Locator) {
+    await locator.waitFor({ state: 'visible', timeout: 5000 });
+    await locator.click({ force: true, timeout: 5000 }); // Force click
+}
+
 
   async doubleClick(locator: Locator) {
     await locator.dblclick();
@@ -19,10 +24,8 @@ export class WebActionUtils {
     await locator.click({ button: 'right' });
   }
 
- async fill(locator: Locator, value: string) {
+async fill(locator: Locator, value: string) {
   await locator.waitFor({ state: 'visible', timeout: 15000 });
-  await locator.click();
-  await locator.fill('');
   await locator.fill(value);
 }
 

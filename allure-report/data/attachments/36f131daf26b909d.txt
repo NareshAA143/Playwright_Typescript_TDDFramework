@@ -1,2 +1,0 @@
-The heading columns are: [ 'First name', 'Last name', 'Email address', 'Present/Absent' ]
-The number of rows is: 3
