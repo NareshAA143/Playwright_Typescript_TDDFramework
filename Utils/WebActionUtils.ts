@@ -24,10 +24,8 @@ async forceclick(locator: Locator) {
     await locator.click({ button: 'right' });
   }
 
- async fill(locator: Locator, value: string) {
+async fill(locator: Locator, value: string) {
   await locator.waitFor({ state: 'visible', timeout: 15000 });
-  await locator.click();
-  await locator.fill('');
   await locator.fill(value);
 }
 

@@ -10,6 +10,7 @@ test.describe('SauceDemo Page', () => {
     await sauceDemoLoginPage.login(data.username, data.password);
     await sauceDemoProductsPage.verifyProductsPageURL('https://www.saucedemo.com/inventory.html');
   });
+
 test('SauceDemo test products validation', async ({sauceDemoLoginPage,sauceDemoProductsPage}) => {
   await sauceDemoProductsPage.ValidateAllProductsDisplayed();
   await sauceDemoProductsPage.getProductsCount();
@@ -40,5 +41,26 @@ test('SauceDemo About Page', async ({sauceDemoProductsPage,sauceDemoAboutPage}) 
   await sauceDemoAboutPage.VerifyRequestADemo();
   
 });
+
+test('Sort products by name AtoZ', async ({sauceDemoProductsPage}) => {
+  await sauceDemoProductsPage.filterByNameAtoZ();
+  await sauceDemoProductsPage.SortByProductNameAtoZ();
+});
+
+test.skip('Sort products by name ZtoA', async ({sauceDemoProductsPage}) => {
+  await sauceDemoProductsPage.filterByNameZtoA();
+  await sauceDemoProductsPage.SortByProductNameZtoA();
+});
+
+test.skip('Sort products by prices low to high', async ({sauceDemoProductsPage}) => {
+  await sauceDemoProductsPage.filterByPriceLowtoHigh();
+  await sauceDemoProductsPage.SortByPriceLowToHigh();
+});
+
+test.skip('Sort products by prices high to low', async ({sauceDemoProductsPage}) => {
+  await sauceDemoProductsPage.filterByPriceHightoLow();
+  await sauceDemoProductsPage.SortByPriceHighToLow();
+});
+
 
 })

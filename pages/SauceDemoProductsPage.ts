@@ -11,6 +11,11 @@ export class SauseDemoProductsPage extends BasePage {
   private menu: Locator;
   private logout: Locator;
   private about: Locator;
+  private filterDropdown: Locator;
+  private NameAtoZ: Locator;
+  private NameZtoA: Locator;
+  private priceLowToHigh: Locator;
+  private priceHighToLow: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -24,6 +29,13 @@ export class SauseDemoProductsPage extends BasePage {
     this.menu = this.page.locator('#react-burger-menu-btn');
     this.logout = this.page.locator('#logout_sidebar_link');
     this.about = this.page.locator('#about_sidebar_link');
+    //this.filterDropdown = this.page.locator('.product_sort_container');
+    this.filterDropdown = this.page.locator('[data-test="product-sort-container"]');
+    this.NameAtoZ = this.page.locator('option[value="az"]');
+    this.NameZtoA = this.page.locator('option[value="za"]');
+    this.priceLowToHigh = this.page.locator('option[value="lohi"]');
+    this.priceHighToLow = this.page.locator('option[value="hilo"]');
+
   }
 
   public async verifyProductsPageURL(URL:string) {
@@ -120,8 +132,61 @@ export class SauseDemoProductsPage extends BasePage {
         console.log(`Product ${i+1}: ${name} added to cart`);
         await this.page.waitForTimeout(2000); 
       }
-}
+    }
   }
+  public async clickOnFilterDropdown(){
+    await this.webActionUtils.click(this.filterDropdown);
+    await this.filterDropdown.waitFor({ state: 'visible', timeout: 5000 });
+  }
+public async filterByNameAtoZ(){
+    await this.filterDropdown.click();
+    await this.filterDropdown.selectOption({index:0});
+}
+public async filterByNameZtoA(){
+    await this.filterDropdown.click();
+    await this.filterDropdown.selectOption({index:1});  
+}
+public async filterByPriceLowtoHigh(){
+    await this.filterDropdown.selectOption({index:2});
+}
+public async filterByPriceHightoLow(){
+    await this.filterDropdown.click();
+    await this.filterDropdown.selectOption({index:3});
+}
+  public async SortByProductNameAtoZ() {
+  const productNames = await this.productTitle.allTextContents();
+  console.log(`Product names: ${productNames}`);
+  //const sortedProductNames = [...productNames].sort((a, b) => a.localeCompare(b));
+   const sortedProductNamesInAscend = [...productNames].sort();
+  console.log(`Sorted product names (A to Z): ${sortedProductNamesInAscend}`);
+  expect(productNames).toEqual(sortedProductNamesInAscend);
+}
+
+public async SortByProductNameZtoA() {
+  const productNames = await this.productTitle.allTextContents();
+  //const sortedProductNames = [...productNames].sort((a, b) => b.localeCompare(a));
+  const sortedProductNamesInDescend = [...productNames].sort().reverse();
+  console.log(`Sorted product names (Z to A): ${sortedProductNamesInDescend}`);
+  expect(productNames).toEqual(sortedProductNamesInDescend);
+}
+
+public async SortByPriceLowToHigh() {
+  const productPrices = await this.productPrice.allTextContents();
+  const ProductPriceswithout$ = productPrices.map(price=>parseInt(price.replace('$','')));
+  console.log(`Product prices: ${ProductPriceswithout$}`);
+  const sortedProductPrices = [...ProductPriceswithout$].sort((a, b) => a - b);
+  console.log(`Sorted product prices (Low to High): ${sortedProductPrices}`);
+  expect(ProductPriceswithout$).toEqual(sortedProductPrices);
+}
+
+public async SortByPriceHighToLow() {
+  const productPrices = await this.productPrice.allTextContents();
+  const ProductPriceswithout$ = productPrices.map(price=>parseInt(price.replace('$','')));
+  console.log(`Product prices: ${ProductPriceswithout$}`);
+  const sortedProductPrices = [...ProductPriceswithout$].sort((a, b) => b - a);
+  console.log(`Sorted product prices (High to Low): ${sortedProductPrices}`);
+  expect(ProductPriceswithout$).toEqual(sortedProductPrices);
+}
 
   public async ClickOnMenu(){
      await this.webActionUtils.click(this.menu);
