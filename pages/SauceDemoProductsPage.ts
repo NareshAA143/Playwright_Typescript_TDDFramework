@@ -1,4 +1,4 @@
-import { expect, Locator, Page } from '@playwright/test';
+  import { expect, Locator, Page } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class SauseDemoProductsPage extends BasePage {
@@ -16,6 +16,7 @@ export class SauseDemoProductsPage extends BasePage {
   private NameZtoA: Locator;
   private priceLowToHigh: Locator;
   private priceHighToLow: Locator;
+  private cartLink: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -29,12 +30,12 @@ export class SauseDemoProductsPage extends BasePage {
     this.menu = this.page.locator('#react-burger-menu-btn');
     this.logout = this.page.locator('#logout_sidebar_link');
     this.about = this.page.locator('#about_sidebar_link');
-    //this.filterDropdown = this.page.locator('.product_sort_container');
     this.filterDropdown = this.page.locator('[data-test="product-sort-container"]');
     this.NameAtoZ = this.page.locator('option[value="az"]');
     this.NameZtoA = this.page.locator('option[value="za"]');
     this.priceLowToHigh = this.page.locator('option[value="lohi"]');
     this.priceHighToLow = this.page.locator('option[value="hilo"]');
+    this.cartLink = this.page.locator('.shopping_cart_link');
 
   }
 
@@ -46,10 +47,12 @@ export class SauseDemoProductsPage extends BasePage {
     const productsCount = await this.webActionUtils.count(this.products);
     console.log(`Total products found: ${productsCount}`);
   }
+  
   public async getAllProdutcsNames() {
     const productsNames = await this.webElementUtils.getAllText(this.productTitle);
     console.log(`All products names: ${productsNames}`);
   }
+
   public async ValidateAllProductsDisplayed(){
     const names = await this.webElementUtils.getAllText(this.productTitle);
     const descriptions = await this.webElementUtils.getAllText(this.productDescription);
@@ -60,11 +63,18 @@ export class SauseDemoProductsPage extends BasePage {
     if(names.length!==descriptions.length || names.length!==prices.length || names.length!==buttonsCount)
       throw new Error(`Mismatch between product details`);
   }
+
   public async addFirstProductToCart(){
     await this.webActionUtils.click(this.addToCartButton.nth(0));
     await this.page.locator('body').click();
 
   }
+
+  public async addSecondProductToCart(){
+    await this.webActionUtils.click(this.addToCartButton.nth(1));
+    await this.page.locator('body').click();
+
+  } 
 
  public async addAllProductsToCart() {
     const count = await this.addToCartButton.count();
@@ -134,6 +144,9 @@ export class SauseDemoProductsPage extends BasePage {
       }
     }
   }
+  public async clickOnCartLink(){
+      await this.webActionUtils.click(this.cartLink);
+  }
   public async clickOnFilterDropdown(){
     await this.webActionUtils.click(this.filterDropdown);
     await this.filterDropdown.waitFor({ state: 'visible', timeout: 5000 });
@@ -186,6 +199,44 @@ public async SortByPriceHighToLow() {
   const sortedProductPrices = [...ProductPriceswithout$].sort((a, b) => b - a);
   console.log(`Sorted product prices (High to Low): ${sortedProductPrices}`);
   expect(ProductPriceswithout$).toEqual(sortedProductPrices);
+}
+public async getFirstProductDetails(){
+  const name = await this.productTitle.nth(0).textContent();
+  const description = await this.productDescription.nth(0).textContent();
+  const price = await this.productPrice.nth(0).textContent();
+  return {
+    name: name?.trim(),
+    description: description?.trim(),
+    price: price?.trim()
+  }
+}
+
+public async getAllProductDetails(){
+  const allNames = await this.productTitle.allTextContents();
+  const allDescription = await this.productDescription.allTextContents();
+  const allPrice = await this.productPrice.allTextContents();
+ const allProducts = allNames.map((_,i)=>
+({
+  name: allNames[i]?.trim(),
+  description: allDescription[i]?.trim(),
+  price: allPrice[i]?.trim()
+}))
+ return allProducts;
+}
+
+public async getSpecificProductDetails(productTitle: string) {
+  const allNames = await this.productTitle.allTextContents();
+  const allDescription = await this.productDescription.allTextContents();
+  const allPrice = await this.productPrice.allTextContents();
+
+  const allProducts = allNames.map((_, i) => ({
+    name: allNames[i]?.trim(),
+    description: allDescription[i]?.trim(),
+    price: allPrice[i]?.trim()
+  }));
+  return allProducts.filter(product =>product.name?.includes(productTitle)
+  );
+
 }
 
   public async ClickOnMenu(){

@@ -34,8 +34,8 @@ import { allure } from 'allure-playwright';
 
 // Load .env from configs folder
 dotenv.config({ path: path.resolve(__dirname, 'configs/.env') });
-
 console.log('BASE_URL loaded:', process.env.BASE_URL); // Optional: check it loads
+
 import { SauceDemoLoginPage } from './pages/SauceDemoLoginPage';
 import { SauseDemoProductsPage } from './pages/SauceDemoProductsPage';
 import { AmazonPage } from './pages/AmazonPage';
@@ -45,6 +45,7 @@ import { OrangeHRMPersonalDetailsPage } from './pages/OrangeHRMPersonalDetailsPa
 import { GlobalsaPage } from './pages/GlobalsaPage';
 import { LetCodePage } from './pages/LetCodePage';
 import { SauceDemoAboutPage } from './pages/SauceDemoAboutPage';
+import { SauseDemoCartPage } from './pages/SauceDemoCartPage';
 
 type Fixtures = {
   sauceDemoLoginPage: SauceDemoLoginPage;
@@ -56,6 +57,7 @@ type Fixtures = {
   globalsqaPage: GlobalsaPage;
   letCodePage: LetCodePage;
   sauceDemoAboutPage: SauceDemoAboutPage;
+  sauceDemoCartPage: SauseDemoCartPage;
 };
 
 export const test = base.extend<Fixtures>({
@@ -87,6 +89,9 @@ export const test = base.extend<Fixtures>({
   },
   sauceDemoAboutPage: async ({ page }: { page: Page }, use) => {
     await use(new SauceDemoAboutPage(page));
+  },
+  sauceDemoCartPage: async ({ page }: { page: Page }, use) => {
+    await use(new SauseDemoCartPage(page));
   },
 });
 
