@@ -1,3 +1,4 @@
+import { domainToASCII } from 'url';
 import { test, expect } from '../base-test';
 import { SauseDemoCartPage } from '../pages/SauceDemoCartPage';
 import { SauseDemoProductsPage } from '../pages/SauceDemoProductsPage';
@@ -63,11 +64,12 @@ test.skip('Sort products by prices high to low', async ({sauceDemoProductsPage})
   await sauceDemoProductsPage.SortByPriceHighToLow();
 });
 
-test('Validate cart page with single product add', async ({ sauceDemoProductsPage, sauceDemoCartPage }) => {
+test('Validate cart page with single product addded', async ({ sauceDemoProductsPage, sauceDemoCartPage }) => {
   const product = await sauceDemoProductsPage.getFirstProductDetails();
   console.log("Product details before adding to cart:", product);
   await sauceDemoProductsPage.addFirstProductToCart();
   await sauceDemoProductsPage.clickOnCartLink();
+  await sauceDemoCartPage.VerifyCartPageURL('https://www.saucedemo.com/cart.html');
   const cartProduct = await sauceDemoCartPage.getProductDetails();
   console.log("Cart product details after adding to cart:", cartProduct);
   await sauceDemoCartPage.CheckUIElements();
@@ -82,7 +84,7 @@ test('Validate cart page with multiple products add', async ({ sauceDemoProducts
 
 });
 
-test('Validate specific product add to cart', async ({ sauceDemoProductsPage, sauceDemoCartPage }) => {
+test('Validate specific product added to cart', async ({ sauceDemoProductsPage, sauceDemoCartPage }) => {
   
     const products = await sauceDemoProductsPage.getSpecificProductDetails("Sauce Labs Backpack");
     console.log("Specific product details before adding to cart:", products);
@@ -92,7 +94,37 @@ test('Validate specific product add to cart', async ({ sauceDemoProductsPage, sa
     const cartProduct = await sauceDemoCartPage.getSpecificProductDetails("Sauce Labs Backpack");
     console.log("Added specific product details after adding to cart:", cartProduct);
     expect(cartProduct).toEqual(products);
+})
 
+test('Validate Cotinue Shopping Functionality', async ({ sauceDemoProductsPage,sauceDemoCartPage }) => {
+  await sauceDemoProductsPage.addFirstProductToCart();
+  await sauceDemoProductsPage.clickOnCartLink();
+  await sauceDemoCartPage.clickOnContinueShopping();
+  await sauceDemoProductsPage.verifyProductsPageURL('https://www.saucedemo.com/inventory.html');
 
 })
+
+test('Validate Remove Product Functionality', async ({ sauceDemoProductsPage, sauceDemoCartPage }) => {
+  await sauceDemoProductsPage.addSpecificProductToCart("Sauce Labs Backpack");
+    await sauceDemoProductsPage.addSecondProductToCart();
+    await sauceDemoProductsPage.clickOnCartLink();
+    await sauceDemoCartPage.removeSpecificProduct("Sauce Labs Backpack");
+
+})
+
+test.only('Validate Checkout Page', async ({ sauceDemoProductsPage, sauceDemoCartPage,sauceDemoCheckoutPage }) => {
+  const filePath = process.env.Test_Data_Path!;
+  const data = CsvUtils.getDataByQEID('Siri', filePath);
+  await sauceDemoProductsPage.addSpecificProductToCart("Sauce Labs Backpack");
+  await sauceDemoProductsPage.addSecondProductToCart();
+  await sauceDemoProductsPage.clickOnCartLink();
+  await sauceDemoCartPage.ClickOnCheckout();
+  await sauceDemoCheckoutPage.VerifyCheckoutPageURL('https://www.saucedemo.com/checkout-step-one.html');
+  await sauceDemoCheckoutPage.fillFirstName(data.cartFirstName);
+  await sauceDemoCheckoutPage.fillLastName(data.cartLastName);
+  await sauceDemoCheckoutPage.fillPostalCode(data.postalCode);  
+  await sauceDemoCheckoutPage.ClickOnContinueButton();
+
+})
+
 })
