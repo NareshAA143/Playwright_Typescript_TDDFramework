@@ -1,3 +1,3 @@
-QEID,username,password,productName,OrangeHRMusername,OrangeHRMpassword,EmpFirstName,EmpMiddleName,EmpLastName,EmpId,DriversLicense,OtherId
-Naresh,standard_user,secret_sauce,,Admin,admin123,Spike,and,Cheems,5673,76345,10123
-Siri,problem_user,secret_sauce,iphone,Admin,admin123,Tom,and,Jerry,143143,12345,123123
+QEID,username,password,productName,OrangeHRMusername,OrangeHRMpassword,EmpFirstName,EmpMiddleName,EmpLastName,EmpId,DriversLicense,OtherId,cartFirstName,cartLastName,postalCode
+Naresh,standard_user,secret_sauce,,Admin,admin123,Spike,and,Cheems,5673,76345,10123,Tom,T,67890
+Siri,problem_user,secret_sauce,iphone,Admin,admin123,Tom,and,Jerry,143143,12345,123123,Jhon,Doe,12345
