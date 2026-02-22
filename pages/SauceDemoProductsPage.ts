@@ -51,8 +51,12 @@ export class SauseDemoProductsPage extends BasePage {
   public async getAllProdutcsNames() {
     const productsNames = await this.webElementUtils.getAllText(this.productTitle);
     console.log(`All products names: ${productsNames}`);
+    for(const product of productsNames){
+      console.log(`Product name: ${product}`);
   }
-
+  expect(productsNames[0]).toBe('Sauce Labs Backpack');
+  expect(productsNames.length).toBe(6);
+}
   public async ValidateAllProductsDisplayed(){
     const names = await this.webElementUtils.getAllText(this.productTitle);
     const descriptions = await this.webElementUtils.getAllText(this.productDescription);
@@ -187,7 +191,8 @@ public async SortByPriceLowToHigh() {
   const productPrices = await this.productPrice.allTextContents();
   const ProductPriceswithout$ = productPrices.map(price=>parseInt(price.replace('$','')));
   console.log(`Product prices: ${ProductPriceswithout$}`);
-  const sortedProductPrices = [...ProductPriceswithout$].sort((a, b) => a - b);
+  //const sortedProductPrices = [...ProductPriceswithout$].sort((a, b) => a - b);
+  const sortedProductPrices = ProductPriceswithout$.slice().sort((a, b) => a - b);
   console.log(`Sorted product prices (Low to High): ${sortedProductPrices}`);
   expect(ProductPriceswithout$).toEqual(sortedProductPrices);
 }
@@ -196,7 +201,8 @@ public async SortByPriceHighToLow() {
   const productPrices = await this.productPrice.allTextContents();
   const ProductPriceswithout$ = productPrices.map(price=>parseInt(price.replace('$','')));
   console.log(`Product prices: ${ProductPriceswithout$}`);
-  const sortedProductPrices = [...ProductPriceswithout$].sort((a, b) => b - a);
+  //const sortedProductPrices = [...ProductPriceswithout$].sort((a, b) => b - a);
+  const sortedProductPrices = ProductPriceswithout$.slice().sort((a, b) => b - a);
   console.log(`Sorted product prices (High to Low): ${sortedProductPrices}`);
   expect(ProductPriceswithout$).toEqual(sortedProductPrices);
 }

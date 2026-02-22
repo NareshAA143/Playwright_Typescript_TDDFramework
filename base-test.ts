@@ -46,6 +46,7 @@ import { LetCodePage } from './pages/LetCodePage';
 import { SauceDemoAboutPage } from './pages/SauceDemoAboutPage';
 import { SauseDemoCartPage } from './pages/SauceDemoCartPage';
 import { SauceDemoCheckoutPage } from './pages/SauceDemoCheckoutPage';
+import { FlipkartPage } from './pages/FlipkartPage';
 
 type Fixtures = {
   sauceDemoLoginPage: SauceDemoLoginPage;
@@ -59,6 +60,7 @@ type Fixtures = {
   sauceDemoAboutPage: SauceDemoAboutPage;
   sauceDemoCartPage: SauseDemoCartPage;
   sauceDemoCheckoutPage: SauceDemoCheckoutPage;
+  flipkartPage: FlipkartPage;
 };
 
 export const test = base.extend<Fixtures>({
@@ -97,6 +99,9 @@ export const test = base.extend<Fixtures>({
   sauceDemoCheckoutPage: async ({ page }: { page: Page }, use) => {
     await use(new SauceDemoCheckoutPage(page));
   },  
+  flipkartPage: async ({ page }: { page: Page }, use) => {
+    await use(new FlipkartPage(page));
+  },
 });
 
 // -------------------- ALLURE HOOK --------------------

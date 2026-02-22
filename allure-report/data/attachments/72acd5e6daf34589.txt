@@ -1,0 +1,15 @@
+Specific product details before adding to cart: [
+  {
+    name: 'Sauce Labs Backpack',
+    description: 'carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.',
+    price: '$29.99'
+  }
+]
+Product 1: Sauce Labs Backpack added to cart
+Added specific product details after adding to cart: [
+  {
+    name: 'Sauce Labs Backpack',
+    description: 'carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.',
+    price: '$29.99'
+  }
+]

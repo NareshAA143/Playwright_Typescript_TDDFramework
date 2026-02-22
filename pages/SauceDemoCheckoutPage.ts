@@ -8,15 +8,17 @@ export class SauceDemoCheckoutPage extends BasePage {
     private postalCode: Locator;
     private continueButton: Locator;
     private cancelButton: Locator;
+    private errorMessage: Locator;
 
     constructor(page: Page) {
         super(page);
         this.checkoutTitle = this.page.locator('.title');
-       this.firstName = this.page.locator('#first-name');
-       this.lastName = this.page.locator('#last-name');
-       this.postalCode = this.page.locator('#postal-code');
+        this.firstName = this.page.locator('#first-name');
+        this.lastName = this.page.locator('#last-name');
+        this.postalCode = this.page.locator('#postal-code');
         this.cancelButton = this.page.locator('#cancel');
         this.continueButton = this.page.locator('#continue');
+        this.errorMessage = this.page.locator('.error-message-container.error');
     }
 
     public async VerifyCheckoutPageURL(URL:string) {
@@ -62,4 +64,12 @@ public async fillPostalCode(postalCode: string) {
         await this.webActionUtils.click(this.continueButton);
     }
 
+    public async ValidateErrorMessage(errorMessage: string) {
+       
+        await this.webActionUtils.isVisible(this.errorMessage);
+        const value = await this.webElementUtils.getText(this.errorMessage);
+        console.log(`Error message: ${value}`);
+        expect(value?.trim()).toBe(errorMessage);
+
     }
+}

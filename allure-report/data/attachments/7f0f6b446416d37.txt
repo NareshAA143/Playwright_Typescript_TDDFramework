@@ -1,0 +1,2 @@
+Product prices: 29,9,15,49,7,15
+Sorted product prices (Low to High): 7,9,15,15,29,49
