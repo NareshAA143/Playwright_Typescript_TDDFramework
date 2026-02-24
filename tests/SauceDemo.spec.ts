@@ -4,7 +4,7 @@ import { SauseDemoCartPage } from '../pages/SauceDemoCartPage';
 import { SauseDemoProductsPage } from '../pages/SauceDemoProductsPage';
 import { CsvUtils } from '../Utils/CsvUtils';
 
-test.describe('SauceDemo Page', () => {
+test.describe.parallel('SauceDemo Page', () => {
   test.beforeEach(async ({sauceDemoLoginPage,sauceDemoProductsPage}) => {
     const filePath = process.env.Test_Data_Path!;
     const data = CsvUtils.getDataByQEID('Siri', filePath);
@@ -49,17 +49,17 @@ test('Sort products by name AtoZ', async ({sauceDemoProductsPage}) => {
   await sauceDemoProductsPage.SortByProductNameAtoZ();
 });
 
-test.skip('Sort products by name ZtoA', async ({sauceDemoProductsPage}) => {
+test('Sort products by name ZtoA', async ({sauceDemoProductsPage}) => {
   await sauceDemoProductsPage.filterByNameZtoA();
   await sauceDemoProductsPage.SortByProductNameZtoA();
 });
 
-test.skip('Sort products by prices low to high', async ({sauceDemoProductsPage}) => {
+test('Sort products by prices low to high', async ({sauceDemoProductsPage}) => {
   await sauceDemoProductsPage.filterByPriceLowtoHigh();
   await sauceDemoProductsPage.SortByPriceLowToHigh();
 });
 
-test.skip('Sort products by prices high to low', async ({sauceDemoProductsPage}) => {
+test('Sort products by prices high to low', async ({sauceDemoProductsPage}) => {
   await sauceDemoProductsPage.filterByPriceHightoLow();
   await sauceDemoProductsPage.SortByPriceHighToLow();
 });
@@ -112,7 +112,7 @@ test('Validate Remove Product Functionality', async ({ sauceDemoProductsPage, sa
 
 })
 
-test.only('Validate Checkout Page', async ({ sauceDemoProductsPage, sauceDemoCartPage,sauceDemoCheckoutPage }) => {
+test ('Validate Checkout Page', async ({ sauceDemoProductsPage, sauceDemoCartPage,sauceDemoCheckoutPage }) => {
   const filePath = process.env.Test_Data_Path!;
   const data = CsvUtils.getDataByQEID('Siri', filePath);
   await sauceDemoProductsPage.addSpecificProductToCart("Sauce Labs Backpack");
@@ -121,9 +121,20 @@ test.only('Validate Checkout Page', async ({ sauceDemoProductsPage, sauceDemoCar
   await sauceDemoCartPage.ClickOnCheckout();
   await sauceDemoCheckoutPage.VerifyCheckoutPageURL('https://www.saucedemo.com/checkout-step-one.html');
   await sauceDemoCheckoutPage.fillFirstName(data.cartFirstName);
-  await sauceDemoCheckoutPage.fillLastName(data.cartLastName);
+  //await sauceDemoCheckoutPage.fillLastName(data.cartLastName);
   await sauceDemoCheckoutPage.fillPostalCode(data.postalCode);  
   await sauceDemoCheckoutPage.ClickOnContinueButton();
+
+})
+
+test('Validate error message on checkout page with no data', async ({ sauceDemoProductsPage, sauceDemoCartPage,sauceDemoCheckoutPage }) => {
+  await sauceDemoProductsPage.addSpecificProductToCart("Sauce Labs Backpack");
+  await sauceDemoProductsPage.addSecondProductToCart();
+  await sauceDemoProductsPage.clickOnCartLink();
+  await sauceDemoCartPage.ClickOnCheckout();
+  await sauceDemoCheckoutPage.VerifyCheckoutPageURL('https://www.saucedemo.com/checkout-step-one.html');
+  await sauceDemoCheckoutPage.ClickOnContinueButton();
+  await sauceDemoCheckoutPage.ValidateErrorMessage("Error: First Name is required");
 
 })
 

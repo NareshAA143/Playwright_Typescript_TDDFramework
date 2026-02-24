@@ -1,4 +1,4 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","19308","Validate adding all products to the cart by product name","firefox","2026-02-17","passed","2026-02-17","SauceDemo Page","SauseDemo.spec.ts","",""
-"","14284","Validate adding all products to the cart by product name","chromium","2026-02-17","passed","2026-02-17","SauceDemo Page","SauseDemo.spec.ts","",""
-"","16505","Validate adding all products to the cart by product name","webkit","2026-02-17","passed","2026-02-17","SauceDemo Page","SauseDemo.spec.ts","",""
+"","9051","newTab","chromium","2026-02-24","passed","2026-02-24","DemoQA Page","DemoQA.spec.ts","",""
+"","12647","newTab","firefox","2026-02-24","passed","2026-02-24","DemoQA Page","DemoQA.spec.ts","",""
+"","15767","newTab","webkit","2026-02-24","passed","2026-02-24","DemoQA Page","DemoQA.spec.ts","",""
