@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
+    "reportsBackup": "ts-node global-teardown.ts",
     "allure:generate": "allure generate allure-results --clean -o allure-report",
     "allure:open": "allure open allure-report"
   },
@@ -14,12 +15,16 @@
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.58.2",
-    "@types/node": "^25.2.3",
-    "allure-playwright": "^3.4.5"
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^25.3.0",
+    "allure-playwright": "^3.4.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "csv-parse": "^6.1.0",
     "dotenv": "^17.2.4",
+    "fs-extra": "^11.3.3",
     "playwrighttypescript_tddframework": "file:"
   }
 }
