@@ -221,6 +221,7 @@ public async getAllProductDetails(){
   const allNames = await this.productTitle.allTextContents();
   const allDescription = await this.productDescription.allTextContents();
   const allPrice = await this.productPrice.allTextContents();
+
  const allProducts = allNames.map((_,i)=>
 ({
   name: allNames[i]?.trim(),
@@ -240,8 +241,7 @@ public async getSpecificProductDetails(productTitle: string) {
     description: allDescription[i]?.trim(),
     price: allPrice[i]?.trim()
   }));
-  return allProducts.filter(product =>product.name?.includes(productTitle)
-  );
+  return allProducts.filter(product =>product.name?.includes(productTitle));
 
 }
 

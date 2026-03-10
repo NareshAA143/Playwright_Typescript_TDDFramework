@@ -1,7 +1,4 @@
-import { domainToASCII } from 'url';
 import { test, expect } from '../base-test';
-import { SauseDemoCartPage } from '../pages/SauceDemoCartPage';
-import { SauseDemoProductsPage } from '../pages/SauceDemoProductsPage';
 import { CsvUtils } from '../Utils/CsvUtils';
 
 test.describe.parallel('SauceDemo Page', () => {

@@ -1,10 +1,11 @@
 import { test, expect } from '../base-test';
 import { CsvUtils } from '../Utils/CsvUtils';
 
-test('OrangeHRM MyInfo Flow', async ({orangeHRMLoginPage, orangeHRMHomePage, orangeHRMPersonalDetailsPage}) => {
-    await orangeHRMLoginPage.Navigate();
+test('OrangeHRM MyInfo Flow', async ({orangeHRMLoginPage, orangeHRMHomePage, orangeHRMPersonalDetailsPage},testInfo) => {
+     
     const filePath = process.env.Test_Data_Path!;
     const data = CsvUtils.getDataByQEID('Siri', filePath);
+
     //loging in to OrangeHRM
     await orangeHRMLoginPage.Navigate();
     await orangeHRMLoginPage.FillUserName(data.OrangeHRMusername);

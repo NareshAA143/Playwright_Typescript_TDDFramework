@@ -52,6 +52,7 @@ export class SauseDemoCartPage extends BasePage {
          const name = await this.productTitle.textContent();
          const description = await this.productDescription.textContent();
          const price = await this.productPrice.textContent();
+
          return {
             name: name?.trim(),
             description: description?.trim(),
@@ -64,8 +65,9 @@ export class SauseDemoCartPage extends BasePage {
         const allNames = await this.productTitle.allTextContents();
         const allDescription = await this.productDescription.allTextContents();
         const allPrice = await this.productPrice.allTextContents();
-        const allProducts = allNames.map((_,i)=>
-                               ({ name: allNames[i]?.trim(),
+
+        const allProducts = allNames.map((_,i)=>({
+                                name: allNames[i]?.trim(),
                                 description: allDescription[i]?.trim(),
                                 price: allPrice[i]?.trim()
             }))
@@ -87,7 +89,7 @@ export class SauseDemoCartPage extends BasePage {
 
     }
 
-    public async  removeSpecificProduct(productTitle: string) {
+    public async removeSpecificProduct(productTitle: string) {
         const count = await this.productTitle.count();
         expect(count).toBeGreaterThan(0);
         for (let i = 0; i < count; i++) {

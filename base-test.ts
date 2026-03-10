@@ -31,6 +31,7 @@ import { test as base, Page, expect } from '@playwright/test';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 import { allure } from 'allure-playwright';
+import { TestResultUtil } from './Utils/TestResultUtil';
 
 // Load .env from configs folder
 dotenv.config({ path: path.resolve(__dirname, 'configs/.env') });
@@ -117,6 +118,10 @@ export const test = base.extend<Fixtures>({
 // -------------------- ALLURE HOOK --------------------
 // Attach screenshot, video, and trace after every test (pass or fail)
 test.afterEach(async ({ page }, testInfo) => {
+
+    // ✅ Print Test Status using Enum Utility
+  TestResultUtil.printTestDetails(testInfo);
+
   // Screenshot
   const screenshot = testInfo.attachments.find(a => a.name === 'screenshot');
   if (screenshot?.path) {
