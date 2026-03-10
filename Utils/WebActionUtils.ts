@@ -29,6 +29,7 @@ async fill(locator: Locator, value: string) {
   await locator.fill(value);
 }
 
+
   async clear(locator: Locator) {
     await locator.fill('');
   }

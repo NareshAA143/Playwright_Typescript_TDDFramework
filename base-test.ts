@@ -31,6 +31,7 @@ import { test as base, Page, expect } from '@playwright/test';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 import { allure } from 'allure-playwright';
+import { TestResultUtil } from './Utils/TestResultUtil';
 
 // Load .env from configs folder
 dotenv.config({ path: path.resolve(__dirname, 'configs/.env') });
@@ -48,6 +49,7 @@ import { SauseDemoCartPage } from './pages/SauceDemoCartPage';
 import { SauceDemoCheckoutPage } from './pages/SauceDemoCheckoutPage';
 import { FlipkartPage } from './pages/FlipkartPage';
 import { DemoQAPage } from './pages/DemoQAPage';
+import { AutomationDemoSitePage } from './pages/AutomationDemoSitePage';
 
 type Fixtures = {
   sauceDemoLoginPage: SauceDemoLoginPage;
@@ -63,6 +65,7 @@ type Fixtures = {
   sauceDemoCheckoutPage: SauceDemoCheckoutPage;
   flipkartPage: FlipkartPage;
   demoQAPage: DemoQAPage;
+  automationDemoSitePage: AutomationDemoSitePage;
 };
 
 export const test = base.extend<Fixtures>({
@@ -107,11 +110,18 @@ export const test = base.extend<Fixtures>({
   demoQAPage: async ({ page }: { page: Page }, use) => {
     await use(new DemoQAPage(page));
   },
+  automationDemoSitePage: async ({ page }: { page: Page }, use) => {
+    await use(new AutomationDemoSitePage(page));
+  },
 });
 
 // -------------------- ALLURE HOOK --------------------
 // Attach screenshot, video, and trace after every test (pass or fail)
 test.afterEach(async ({ page }, testInfo) => {
+
+    // ✅ Print Test Status using Enum Utility
+  TestResultUtil.printTestDetails(testInfo);
+
   // Screenshot
   const screenshot = testInfo.attachments.find(a => a.name === 'screenshot');
   if (screenshot?.path) {

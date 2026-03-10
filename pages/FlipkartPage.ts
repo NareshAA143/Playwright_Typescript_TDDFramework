@@ -28,14 +28,14 @@ export class FlipkartPage extends BasePage {
         await this.webActionUtils.click(this.xbutton);
     }
 
-  public async SearchProdcut(productName: string) {
+   public async SearchProdcut(productName: string) {
     await this.webActionUtils.click(this.searchBox);
     await this.webActionUtils.fill(this.searchBox, productName);
     await this.page.keyboard.press('Enter');
 
-    await this.page.waitForLoadState('domcontentloaded'); // better
-    await this.page.waitForTimeout(3000); // ⭐ stabilization for WebKit
-}
+    await this.page.waitForLoadState('domcontentloaded');
+    await this.page.waitForTimeout(3000); 
+    }
 
    public async GetAllLaptopNames(): Promise<{laptopNames: string[],brandNames: string[],uniqueBrands: string[]}> {
     
@@ -51,7 +51,7 @@ export class FlipkartPage extends BasePage {
     console.log("uniqueBrands :", uniqueBrands);
 
     return { laptopNames, brandNames, uniqueBrands };
-}
+    }
 
     public async GetAllBrandNamesWithPrice(): Promise<Map<string, string>> {
     const count = await this.productCards.count();
@@ -87,7 +87,7 @@ export class FlipkartPage extends BasePage {
     }
 
     return productMap;
-}
+    }
     
 
     

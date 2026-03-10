@@ -1,4 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","9051","newTab","chromium","2026-02-24","passed","2026-02-24","DemoQA Page","DemoQA.spec.ts","",""
-"","12647","newTab","firefox","2026-02-24","passed","2026-02-24","DemoQA Page","DemoQA.spec.ts","",""
-"","15767","newTab","webkit","2026-02-24","passed","2026-02-24","DemoQA Page","DemoQA.spec.ts","",""

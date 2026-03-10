@@ -1,5 +1,6 @@
 //npm install --save-dev @types/fs-extra
 //add globalTeardown: require.resolve('./global-teardown'), in defineConfig in playwright.config.ts
+//add outputDir: 'test-results', in defineConfig in playwright.config.ts
 import fs from 'fs-extra';
 
 async function backup() {
@@ -7,7 +8,9 @@ async function backup() {
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
 
   const safeTestName = testName.replace(/\s+/g, '-').toLowerCase();
-  const backupDir = `backup/${safeTestName}-${timestamp}`;
+
+  // ✅ Changed folder name here
+const backupDir = `ReportsHistory/${safeTestName}-${timestamp}`;
 
   fs.ensureDirSync(backupDir);
 
@@ -40,7 +43,6 @@ async function backup() {
   }
 }
 
-// ✅ IMPORTANT: call function
 backup();
 
-export default backup;s
+export default backup;

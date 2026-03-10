@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
-    "reportsBackup": "ts-node global-teardown.ts",
     "allure:generate": "allure generate allure-results --clean -o allure-report",
-    "allure:open": "allure open allure-report"
+    "allure:open": "allure open allure-report",
+    "allure:report": "allure generate allure-results --clean -o allure-report && allure open allure-report",
+    "reportsBackup": "ts-node global-teardown.ts"
   },
   "keywords": [],
   "author": "",
