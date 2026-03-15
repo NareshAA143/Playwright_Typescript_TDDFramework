@@ -13,12 +13,13 @@ test('OrangeHRM MyInfo Flow', async ({orangeHRMLoginPage, orangeHRMHomePage, ora
     await orangeHRMLoginPage.ClickLoginButton();
     //navigating to MyInfo 
     await orangeHRMHomePage.ClickMyInfo();
-    //filling personal details form
+    // //filling personal details form
     await orangeHRMPersonalDetailsPage.FillEmployeeFirstName(data.EmpFirstName);
     await orangeHRMPersonalDetailsPage.FillEmployeeMiddleName(data.EmpMiddleName);
     await orangeHRMPersonalDetailsPage.FillEmployeeLastName(data.EmpLastName);
     await orangeHRMPersonalDetailsPage.FillEmployeeId(data.EmpId);
     await orangeHRMPersonalDetailsPage.FillDriversLicense(data.DriversLicense);
     await orangeHRMPersonalDetailsPage.FillOtherId(data.OtherId);
+    await orangeHRMPersonalDetailsPage.fillLicenseExpiryDate(7, 'December', 2025);
 
 })  

@@ -8,6 +8,7 @@ export class OrangeHRMPersonalDetailsPage extends BasePage {
     private empId:Locator;
     private driversLicense:Locator;
     private otherId:Locator;
+    private licenseExpiryDate:Locator;
 
     constructor(page:Page) {
         super(page);
@@ -17,8 +18,13 @@ export class OrangeHRMPersonalDetailsPage extends BasePage {
         this.empId = this.page.locator('(//div[@class="oxd-input-group oxd-input-field-bottom-space"]/child::div/child::input[@class="oxd-input oxd-input--active"])[1]');
         this.driversLicense = this.page.locator('(//div[@class="oxd-input-group oxd-input-field-bottom-space"]/child::div/child::input[@class="oxd-input oxd-input--active"])[3]');
         this.otherId = this.page.locator('(//div[@class="oxd-input-group oxd-input-field-bottom-space"]/child::div/child::input[@class="oxd-input oxd-input--active"])[2]');
+        this.licenseExpiryDate = this.page.locator('(//div[@class="oxd-date-input"]/child::i[@class="oxd-icon bi-calendar oxd-date-input-icon"])[1]');
     }
     public async FillEmployeeFirstName(firstName:string) {
+
+        await this.empFirstName.click();
+        await this.empFirstName.clear();
+        await this.empFirstName.fill('');
         await this.webActionUtils.fill(this.empFirstName, firstName);
         await this.page.waitForTimeout(2000);
         const inputValue = await this.empFirstName.inputValue();
@@ -26,6 +32,9 @@ export class OrangeHRMPersonalDetailsPage extends BasePage {
         expect(inputValue).toEqual(firstName);
     }
     public async FillEmployeeMiddleName(middleName:string) {
+        await this.empMiddleName.click();
+        await this.empMiddleName.clear();
+        await this.empMiddleName.fill('');
         await this.webActionUtils.fill(this.empMiddleName, middleName);
         await this.page.waitForTimeout(2000);
         const inputValue = await this.empMiddleName.inputValue();
@@ -33,6 +42,9 @@ export class OrangeHRMPersonalDetailsPage extends BasePage {
         expect(inputValue).toEqual(middleName);
     }
     public async FillEmployeeLastName(lastName:string) {
+        await this.empLastName.click();
+        await this.empLastName.clear();
+        await this.empLastName.fill('');
         await this.webActionUtils.fill(this.empLastName, lastName);
         await this.page.waitForTimeout(3000);
         const inputValue = await this.empLastName.inputValue();
@@ -63,4 +75,30 @@ export class OrangeHRMPersonalDetailsPage extends BasePage {
         console.log('Other Id input value:', inputValue);   
         expect(inputValue).toEqual(otherId);
     }
+ public async fillLicenseExpiryDate(day: number, month: string, year: number) {
+
+    // Open calendar
+    await this.webActionUtils.click(this.licenseExpiryDate);
+
+    // Select Month
+    const monthDropDown = this.page.locator('.oxd-calendar-selector-month-selected');
+    await monthDropDown.click();
+
+    const monthOption = this.page.locator(`//ul[contains(@class,'oxd-calendar-dropdown')]//li[text()="${month}"]`);
+    await monthOption.waitFor({ state: 'visible' });
+    await monthOption.click();
+
+    // Select Year
+    const yearDropDown = this.page.locator('.oxd-calendar-selector-year-selected');
+    await yearDropDown.click();
+
+    const yearOption = this.page.locator(`//ul[contains(@class,'oxd-calendar-dropdown')]//li[text()="${year}"]`);
+    await yearOption.waitFor({ state: 'visible' });
+    await yearOption.click();
+
+    // Select Day
+    const dayLocator = this.page.locator(`.oxd-calendar-date:has-text("${day}")`).first();
+    await dayLocator.waitFor({ state: 'visible' });
+    await dayLocator.click();
+}
 }
