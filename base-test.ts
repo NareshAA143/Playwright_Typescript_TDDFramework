@@ -50,6 +50,7 @@ import { SauceDemoCheckoutPage } from './pages/SauceDemoCheckoutPage';
 import { FlipkartPage } from './pages/FlipkartPage';
 import { DemoQAPage } from './pages/DemoQAPage';
 import { AutomationDemoSitePage } from './pages/AutomationDemoSitePage';
+import { TestPagerPage } from './pages/TestPagerPage';
 
 type Fixtures = {
   sauceDemoLoginPage: SauceDemoLoginPage;
@@ -66,6 +67,7 @@ type Fixtures = {
   flipkartPage: FlipkartPage;
   demoQAPage: DemoQAPage;
   automationDemoSitePage: AutomationDemoSitePage;
+  testPagerPage: TestPagerPage;
 };
 
 export const test = base.extend<Fixtures>({
@@ -112,6 +114,9 @@ export const test = base.extend<Fixtures>({
   },
   automationDemoSitePage: async ({ page }: { page: Page }, use) => {
     await use(new AutomationDemoSitePage(page));
+  },
+  testPagerPage: async ({ page }: { page: Page }, use) => {
+    await use(new TestPagerPage(page));
   },
 });
 
